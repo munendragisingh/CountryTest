@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum HomeViewAction{
+    case showAlert
+}
+
 class HomeView: View {
     let tableView = UITableView()
     private var refreshController = UIRefreshControl()
@@ -91,11 +95,15 @@ extension HomeView: ViewModelDelegate {
                 self.refreshController.endRefreshing()
             }
             self.tableView.reloadData()
+            self.delegate?.view(view: self, didPerformAction: HomeViewAction.showAlert, userInfo: "success")
+            self.hideLoader()
         }
-        self.hideLoader()
     }
     
-    func didReceiveError(message: Error?){
-        self.hideLoader()
+    func didReceiveError(error: Error?){
+        DispatchQueue.main.async {
+            self.hideLoader()
+            self.delegate?.view(view: self, didPerformAction: HomeViewAction.showAlert, userInfo: error?.localizedDescription)
+        }
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 protocol ViewModelDelegate: class {
     func didReceiveCountryData()
-    func didReceiveError(message: Error?)
+    func didReceiveError(error: Error?)
 }
 
 class ViewModel {
@@ -37,7 +37,7 @@ class ViewModel {
     func getList() {
         guard let url = URL(string: urlManager.countyFacts) else {
             let error = NSError(domain: "", code: 5001, userInfo: ["message":"Invalid URL"]) as Error
-            self.delegate?.didReceiveError(message: error)
+            self.delegate?.didReceiveError(error: error)
             return
         }
         
@@ -51,10 +51,10 @@ class ViewModel {
                     self.countryListData = try decoder.decode(CountryListData.self, from: data)
                     self.delegate?.didReceiveCountryData()
                 } catch {
-                    self.delegate?.didReceiveError(message: error)
+                    self.delegate?.didReceiveError(error: error)
                    }
             } else {
-                self.delegate?.didReceiveError(message: error)
+                self.delegate?.didReceiveError(error: error)
             }
         }
     }
