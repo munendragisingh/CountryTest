@@ -14,6 +14,11 @@ class HomeViewController: ViewController {
         super.viewDidLoad()
     }
     
+    /// this methos will handle all events comming from view
+    /// - Parameters:
+    ///   - view: view
+    ///   - action: event
+    ///   - userInfo: data comming from view
     override func view(view: View, didPerformAction action: Any, userInfo: Any?) {
         switch action {
         case HomeViewAction.showAlert:

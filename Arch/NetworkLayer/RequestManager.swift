@@ -10,6 +10,10 @@ import Foundation
 class RequestManager {
     typealias complition = (_ responce: Data?, _ error: Error?) -> Void
     
+    /// get request
+    /// - Parameters:
+    ///   - url: url
+    ///   - complition: complition
     func get(with url: URL, complition: @escaping complition) {
         let request = self.getRequest(url, "GET")
         NetworkManager.main.requestToServer(request: request) { (data, request, error) in

@@ -13,15 +13,24 @@ enum HomeViewAction{
 }
 
 class HomeView: View {
-    let tableView = UITableView()
+    private let tableView = UITableView()
     private var refreshController = UIRefreshControl()
-    var viewModel: ViewModel?
+    private var viewModel: ViewModel?
+    
+    /// tableview constraints
+    private var constraint:Array<NSLayoutConstraint> {
+        let top = NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 0)
+        let bottom = NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
+        let left = NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.left, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.left, multiplier: 1, constant: 0)
+        let right = NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.right, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.right, multiplier: 1, constant: 0)
+        return [top, bottom, left, right];
+    }
+    
     
     override func viewDidLoad() {
         self.addSubview(tableView)
         viewModel = ViewModel()
         viewModel?.delegate = self
-        
         applyConstraint()
     }
     
@@ -34,15 +43,10 @@ class HomeView: View {
         }
     }
     
+    /// add Constraint in table view
     private func applyConstraint() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let top = NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 0)
-        let bottom = NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
-        let left = NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.left, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.left, multiplier: 1, constant: 0)
-        let right = NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.right, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.right, multiplier: 1, constant: 0)
-        self.addConstraints([top, bottom, left, right])
-
+        self.addConstraints(constraint)
         tableView.register(CountryCell.self, forCellReuseIdentifier: "CountryCell")
         tableView.delegate = self
         tableView.dataSource = self
@@ -50,13 +54,15 @@ class HomeView: View {
         self.setupRefreshController()
     }
     
+    /// setup pul to refresh controller
     private func setupRefreshController() {
         self.refreshController.tintColor = UIColor.gray
         self.tableView.refreshControl = refreshController
-        self.refreshController.addTarget(self, action: #selector(pullToRefreshCountryData), for: .valueChanged)
+        self.refreshController.addTarget(self, action: #selector(pullToRefreshAction), for: .valueChanged)
     }
     
-    @objc func pullToRefreshCountryData() {
+    ///pullToRefreshAction
+    @objc func pullToRefreshAction() {
         if Utility.main.isConnected {
             viewModel?.getList()
         }else{
@@ -67,10 +73,10 @@ class HomeView: View {
 }
 
 extension HomeView: UITableViewDataSource {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let viewModel = viewModel else { return 0 }
         return viewModel.numberOfSection
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -97,14 +103,14 @@ extension HomeView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CountryCell", for: indexPath) as? CountryCell
-        
         return cell ?? CountryCell()
     }
 }
 
 extension HomeView: ViewModelDelegate {
     
-    func didReceiveCountryData() {
+    /// api success call
+    func success() {
         self.hideLoader()
         DispatchQueue.main.async {
             if self.refreshController.isRefreshing {
@@ -115,6 +121,8 @@ extension HomeView: ViewModelDelegate {
         }
     }
     
+    /// return some error
+    /// - Parameter error: error
     func didReceiveError(error: Error?){
         self.hideLoader()
         DispatchQueue.main.async {

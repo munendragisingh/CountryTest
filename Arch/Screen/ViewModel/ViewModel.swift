@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ViewModelDelegate: class {
-    func didReceiveCountryData()
+    func success()
     func didReceiveError(error: Error?)
 }
 
@@ -53,7 +53,7 @@ class ViewModel {
                 let decoder = JSONDecoder()
                 do {
                     self.countryListData = try decoder.decode(CountryListData.self, from: data)
-                    self.delegate?.didReceiveCountryData()
+                    self.delegate?.success()
                 } catch {
                     self.delegate?.didReceiveError(error: error)
                    }

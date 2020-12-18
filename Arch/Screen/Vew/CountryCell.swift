@@ -34,10 +34,10 @@ class CountryCell: UITableViewCell {
         
         addSubview(cardView)
         cardView.addSubview(countryImage)
-        
         setupCardView()
         setupcountryImage()
         setupStack()
+        self.setTheme()
     }
     
     override func prepareForReuse() {
@@ -46,23 +46,18 @@ class CountryCell: UITableViewCell {
         self.countryDescription.text = ""
     }
     
-    private func setLabelStyles() {
+    /// set text theme
+    private func setTheme() {
         title.numberOfLines = 0
         countryDescription.numberOfLines = 0
-        self.setTextColor()
-        self.setFont()
-    }
-    
-    private func setFont() {
         self.title.font = UIFont(name: "Helvetica-Bold", size: 18)
         self.countryDescription.font = UIFont(name: "Helvetica-Light", size: 15)
-    }
-    
-    private func setTextColor() {
         self.title.textColor = UIColor.black
         self.countryDescription.textColor = UIColor.lightGray
     }
     
+    /// set cell data
+    /// - Parameter viewModel: CountryViewModel
     func setUpData(_ viewModel: CountryViewModel) {
         if let imgUrl = URL(string: viewModel.imgUrl) {
             countryImage.loadImageWithUrl(url: imgUrl,placeHolderImage: UIImage(named: "placeHolder"))
@@ -76,7 +71,9 @@ class CountryCell: UITableViewCell {
     }
 }
 
+/// set sell views
 extension CountryCell {
+    /// set card view and add constraints
     fileprivate func setupCardView() {
         cardView.layer.borderWidth = 1.0
         cardView.layer.borderColor = UIColor.purple.cgColor
@@ -90,6 +87,7 @@ extension CountryCell {
         cardView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
     }
     
+    /// set verticalStack and  and add constraints
     fileprivate func setupcountryImage() {
         countryImage.translatesAutoresizingMaskIntoConstraints = false
         countryImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
@@ -99,7 +97,7 @@ extension CountryCell {
         countryImage.clipsToBounds = true
     }
     
-
+    /// set horizontal, vertical Stack and add constraints
     fileprivate func setupStack() {
         verticalStack.addArrangedSubview(title)
         verticalStack.addArrangedSubview(countryDescription)
@@ -127,7 +125,5 @@ extension CountryCell {
         horizontalStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
         horizontalStack.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
         horizontalStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
-        
-       self.setLabelStyles()
     }
 }

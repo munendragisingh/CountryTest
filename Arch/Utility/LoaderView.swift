@@ -8,14 +8,16 @@
 
 import UIKit
 
+/// LoaderView will used to display full screen loader
 class LoaderView: UIView {
 
     let activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
     
+    /// initializer
+    /// - Parameter frame: frame of loader
     override init(frame:CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-         
         setup()
     }
     
@@ -23,10 +25,12 @@ class LoaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// layoutSubviews
     override func layoutSubviews() {
         activityIndicatorView.center = self.center
     }
     
+    /// set activity Indicator View
     func setup() {
         activityIndicatorView.color = .white
         activityIndicatorView.startAnimating()

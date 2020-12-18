@@ -43,6 +43,10 @@ class ViewController: UIViewController {
 }
 
 extension ViewController {
+    /// display alert
+    /// - Parameters:
+    ///   - title: title of alert
+    ///   - message: alert message 
     func showAlert(title: String, message: String) {
         let alertView = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alertView.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in

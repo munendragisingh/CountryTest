@@ -10,6 +10,7 @@ import UIKit
 
 let imageCache = NSCache<AnyObject, AnyObject>()
 
+/// use this class to download and cache image
 class ImageLoader: UIImageView {
     
 
@@ -17,6 +18,10 @@ class ImageLoader: UIImageView {
 
     let activityIndicator = UIActivityIndicatorView()
     
+    /// loadImageWithUrl method will download image and save it to cache
+    /// - Parameters:
+    ///   - url: imahe url
+    ///   - placeHolderImage: place holder image
     func loadImageWithUrl(url: URL, placeHolderImage: UIImage?) {
 
         activityIndicator.color = .darkGray
@@ -38,9 +43,7 @@ class ImageLoader: UIImageView {
             return
         }
 
-        // image does not available in cache.. so retrieving it from url...
         URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-
             if error != nil {
                 print(error as Any)
                 DispatchQueue.main.async(execute: {
@@ -48,15 +51,11 @@ class ImageLoader: UIImageView {
                 })
                 return
             }
-
             DispatchQueue.main.async(execute: {
-
                 if let unwrappedData = data, let imageToCache = UIImage(data: unwrappedData) {
-
                     if self.imageURL == url {
                         self.image = imageToCache
                     }
-
                     imageCache.setObject(imageToCache, forKey: url as AnyObject)
                 } else {
                     self.image = placeHolderImage

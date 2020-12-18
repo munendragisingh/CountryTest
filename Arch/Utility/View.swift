@@ -11,6 +11,7 @@ protocol ViewDelegate: class {
     func view(view: View, didPerformAction action: Any, userInfo: Any?)
 }
 
+/// View is the base class of uiview, which have all comune methods
 class View: UIView {
     
     weak var delegate: ViewDelegate?
@@ -38,6 +39,8 @@ class View: UIView {
 }
 
 extension View {
+    
+    /// display full screen loader
      func showLoader() {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else{
@@ -46,7 +49,8 @@ extension View {
             Utility.main.window?.addSubview(self.loaderView)
         }
     }
-
+    
+    /// remove full screen loader
     func hideLoader() {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else {

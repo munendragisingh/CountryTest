@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// country list model
 struct CountryListData: Decodable {
     var title: String?
     var countries:Array<Country>?
@@ -27,6 +28,7 @@ struct CountryListData: Decodable {
     }
 }
 
+/// country model
 struct Country: Decodable {
     var title: String?
     var description: String?

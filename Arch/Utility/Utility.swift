@@ -13,6 +13,7 @@ class Utility {
     public static let main = Utility()
     private init() {}
     
+    /// return window class
     var window: UIWindow? {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let sceneDelegate = windowScene.delegate as? SceneDelegate else {
@@ -21,6 +22,7 @@ class Utility {
         return sceneDelegate.window
     }
     
+    /// check for nerwork connection
     var isConnected: Bool {
         do{
         if try Reachability().connection == .unavailable {
