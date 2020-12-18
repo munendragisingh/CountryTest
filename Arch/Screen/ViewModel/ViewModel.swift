@@ -22,6 +22,10 @@ class ViewModel {
         return 1
     }
     
+    func getTitle() -> String {
+        return self.countryListData?.title ?? "Title"
+    }
+    
     func numberOfRowsInSection(_ section: Int) -> Int {
         guard let countryListData = countryListData, let countries = countryListData.countries else {
             return 0

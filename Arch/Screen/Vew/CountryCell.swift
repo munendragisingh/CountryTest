@@ -16,8 +16,8 @@ class CountryCell: UITableViewCell {
     private let horizontalStack: UIStackView = UIStackView()
     
     private let countryImage: ImageLoader = {
-        let imgView = ImageLoader(image: UIImage())
-        imgView.contentMode = .scaleAspectFit
+        let imgView = ImageLoader(image: UIImage(named: "placeHolder"))
+        imgView.contentMode = .scaleAspectFill
         imgView.layer.cornerRadius = 10
         imgView.clipsToBounds = true
         return imgView
@@ -65,7 +65,7 @@ class CountryCell: UITableViewCell {
     
     func setUpData(_ viewModel: CountryViewModel) {
         if let imgUrl = URL(string: viewModel.imgUrl) {
-            countryImage.loadImageWithUrl(imgUrl)
+            countryImage.loadImageWithUrl(url: imgUrl,placeHolderImage: UIImage(named: "placeHolder"))
         }
         title.text = viewModel.title
         countryDescription.text = viewModel.description

@@ -9,6 +9,7 @@ import UIKit
 
 enum HomeViewAction{
     case showAlert
+    case setTitle
 }
 
 class HomeView: View {
@@ -20,9 +21,17 @@ class HomeView: View {
         self.addSubview(tableView)
         viewModel = ViewModel()
         viewModel?.delegate = self
-        viewModel?.getList()
-        self.showLoader()
+        
         applyConstraint()
+    }
+    
+    override func viewDidAppear() {
+        if Utility.main.isConnected {
+            viewModel?.getList()
+            self.showLoader()
+        }else{
+            self.delegate?.view(view: self, didPerformAction: HomeViewAction.showAlert, userInfo: "Please connect to network")
+        }
     }
     
     private func applyConstraint() {
@@ -40,6 +49,7 @@ class HomeView: View {
         tableView.separatorStyle = .none
         self.setupRefreshController()
     }
+    
     private func setupRefreshController() {
         self.refreshController.tintColor = UIColor.gray
         self.tableView.refreshControl = refreshController
@@ -47,7 +57,12 @@ class HomeView: View {
     }
     
     @objc func pullToRefreshCountryData() {
-        viewModel?.getList()
+        if Utility.main.isConnected {
+            viewModel?.getList()
+        }else{
+            self.delegate?.view(view: self, didPerformAction: HomeViewAction.showAlert, userInfo: "Please connect to network")
+            self.refreshController.endRefreshing()
+        }
     }
 }
 
@@ -87,22 +102,22 @@ extension HomeView: UITableViewDelegate {
     }
 }
 
-
 extension HomeView: ViewModelDelegate {
+    
     func didReceiveCountryData() {
+        self.hideLoader()
         DispatchQueue.main.async {
             if self.refreshController.isRefreshing {
                 self.refreshController.endRefreshing()
             }
             self.tableView.reloadData()
-            self.delegate?.view(view: self, didPerformAction: HomeViewAction.showAlert, userInfo: "success")
-            self.hideLoader()
+            self.delegate?.view(view: self, didPerformAction: HomeViewAction.setTitle, userInfo: self.viewModel?.getTitle())
         }
     }
     
     func didReceiveError(error: Error?){
+        self.hideLoader()
         DispatchQueue.main.async {
-            self.hideLoader()
             self.delegate?.view(view: self, didPerformAction: HomeViewAction.showAlert, userInfo: error?.localizedDescription)
         }
     }

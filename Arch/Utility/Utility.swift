@@ -21,4 +21,17 @@ class Utility {
         return sceneDelegate.window
     }
     
+    var isConnected: Bool {
+        do{
+        if try Reachability().connection == .unavailable {
+            return false
+        }else{
+            return true
+        }
+        }catch{
+            return false
+        }
+        
+    }
+    
 }

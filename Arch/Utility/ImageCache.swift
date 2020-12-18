@@ -17,7 +17,7 @@ class ImageLoader: UIImageView {
 
     let activityIndicator = UIActivityIndicatorView()
     
-    func loadImageWithUrl(_ url: URL) {
+    func loadImageWithUrl(url: URL, placeHolderImage: UIImage?) {
 
         activityIndicator.color = .darkGray
         addSubview(activityIndicator)
@@ -58,6 +58,8 @@ class ImageLoader: UIImageView {
                     }
 
                     imageCache.setObject(imageToCache, forKey: url as AnyObject)
+                } else {
+                    self.image = placeHolderImage
                 }
                 self.activityIndicator.stopAnimating()
             })

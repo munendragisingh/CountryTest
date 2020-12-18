@@ -18,6 +18,8 @@ class HomeViewController: ViewController {
         switch action {
         case HomeViewAction.showAlert:
             self.showAlert(title: "error", message: (userInfo as? String) ?? "")
+        case HomeViewAction.setTitle:
+            self.title = (userInfo as? String) ?? "Title"
         default: break
             
         }
