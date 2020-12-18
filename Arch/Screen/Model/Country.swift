@@ -20,6 +20,10 @@ struct CountryListData: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.countries = try container.decodeIfPresent(Array<Country>.self, forKey: .countries)
+        self.countries = self.countries?.filter {
+            ($0.title != nil)
+        }
+        print("")
     }
 }
 
