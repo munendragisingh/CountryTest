@@ -41,7 +41,7 @@ class CountryCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        self.countryImage.image = UIImage()
+        self.countryImage.image = UIImage(named: "placeHolder")
         self.title.text = ""
         self.countryDescription.text = ""
     }

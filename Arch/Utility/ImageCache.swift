@@ -48,8 +48,9 @@ class ImageLoader: UIImageView {
                 print(error as Any)
                 DispatchQueue.main.async(execute: {
                     self.activityIndicator.stopAnimating()
+                    self.image = placeHolderImage
+                    return
                 })
-                return
             }
             DispatchQueue.main.async(execute: {
                 if let unwrappedData = data, let imageToCache = UIImage(data: unwrappedData) {
