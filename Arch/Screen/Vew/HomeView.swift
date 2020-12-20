@@ -89,22 +89,14 @@ extension HomeView: UITableViewDataSource {
         guard let viewModel = viewModel else { return 0 }
         return viewModel.numberOfRowsInSection(section)
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? CountryCell else {
-            return
-        }
-        let countryInfoViewModel = self.viewModel?.country(indexPath.row)
-        cell.setUpData(countryInfoViewModel!)
-    }
-    
-    
 }
 
 extension HomeView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CountryCell", for: indexPath) as? CountryCell
+        let countryInfoViewModel = self.viewModel?.country(indexPath.row)
+        cell?.setUpData(countryInfoViewModel!)
         return cell ?? CountryCell()
     }
 }

@@ -115,6 +115,6 @@ extension CountryCell {
         NSLayoutConstraint(item: countryDescription, attribute: .trailing, relatedBy: .equal, toItem: self.cardView, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
         NSLayoutConstraint(item: countryDescription, attribute: .top, relatedBy: .equal, toItem: self.title, attribute: .topMargin, multiplier: 1, constant: 20).isActive = true
         NSLayoutConstraint(item: countryDescription, attribute: .bottom, relatedBy: .equal, toItem: self.cardView, attribute: .bottomMargin, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: countryDescription, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60).isActive = true
+        NSLayoutConstraint(item: countryDescription, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50).isActive = true
     }
 }

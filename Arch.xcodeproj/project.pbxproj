@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		90B5E6F6258D1BDE00AE2C1D /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B5E6F5258D1BDE00AE2C1D /* ImageCache.swift */; };
 		90B5E6FB258D282100AE2C1D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B5E6FA258D282100AE2C1D /* Reachability.swift */; };
-		90B5E700258D39CD00AE2C1D /* Stuber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B5E6FF258D39CD00AE2C1D /* Stuber.swift */; };
 		90B5E705258D41F600AE2C1D /* Success.json in Resources */ = {isa = PBXBuildFile; fileRef = 90B5E704258D41F600AE2C1D /* Success.json */; };
 		90B5E70A258D426100AE2C1D /* MockSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B5E709258D426100AE2C1D /* MockSession.swift */; };
 		90C8DFB8258BB35400E5301A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8DFB7258BB35400E5301A /* AppDelegate.swift */; };
@@ -54,7 +53,6 @@
 /* Begin PBXFileReference section */
 		90B5E6F5258D1BDE00AE2C1D /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		90B5E6FA258D282100AE2C1D /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
-		90B5E6FF258D39CD00AE2C1D /* Stuber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stuber.swift; sourceTree = "<group>"; };
 		90B5E704258D41F600AE2C1D /* Success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Success.json; sourceTree = "<group>"; };
 		90B5E709258D426100AE2C1D /* MockSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSession.swift; sourceTree = "<group>"; };
 		90C8DFB4258BB35400E5301A /* Arch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,7 +170,6 @@
 				90C8E00B258BB5BD00E5301A /* URLManager.swift */,
 				90C8E010258BB5FB00E5301A /* RequestManager.swift */,
 				90C8E015258BB62F00E5301A /* NetworkManager.swift */,
-				90B5E6FF258D39CD00AE2C1D /* Stuber.swift */,
 			);
 			path = NetworkLayer;
 			sourceTree = "<group>";
@@ -372,7 +369,6 @@
 				90C8E016258BB62F00E5301A /* NetworkManager.swift in Sources */,
 				90C8E011258BB5FB00E5301A /* RequestManager.swift in Sources */,
 				90C8DFBC258BB35400E5301A /* HomeViewController.swift in Sources */,
-				90B5E700258D39CD00AE2C1D /* Stuber.swift in Sources */,
 				90B5E6FB258D282100AE2C1D /* Reachability.swift in Sources */,
 				90C8E00C258BB5BD00E5301A /* URLManager.swift in Sources */,
 				90C8E03A258BC2C400E5301A /* HomeView.swift in Sources */,
