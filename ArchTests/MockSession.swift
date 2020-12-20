@@ -9,6 +9,8 @@ import Foundation
 class URLProtocolMock: URLProtocol {
     
     static var testURLs = [URL?: String]()
+    static var httpError:Error?
+    
     override class func canInit(with request: URLRequest) -> Bool {
         return true
     }
@@ -16,8 +18,16 @@ class URLProtocolMock: URLProtocol {
         return request
     }
 
+    static func clearMock(){
+        testURLs.removeAll()
+    }
+    
     override func startLoading() {
         if let url = request.url {
+            if let error = URLProtocolMock.httpError {
+                self.client?.urlProtocol(self, didFailWithError: error)
+                    return
+            }
             if let fileName = URLProtocolMock.testURLs[url] {
                 let bundle = Bundle(for: type(of: self))
                 let urlPath = bundle.path(forResource: fileName, ofType: "json")

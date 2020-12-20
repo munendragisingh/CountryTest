@@ -57,12 +57,29 @@ class ArchTests: XCTestCase {
         viewModel.getList()
         waitForExpectations(timeout: 10)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testError() {
+        URLProtocolMock.clearMock()
+        let urlManager = URLManager()
+        let url = URL(string: urlManager.countyFacts)
+        URLProtocolMock.testURLs = [url: "Success"]
+        URLProtocolMock.httpError = NSError(domain: urlManager.countyFacts, code: 500, userInfo: ["message" : "Internal server error"])
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [URLProtocolMock.self]
+        let session = URLSession(configuration: config)
+        NetworkManager.main.setMockSession(session: session)
+        
+        
+        let viewModel = ViewModel()
+        let expectation = self.expectation(description: "Success Test")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            XCTAssertEqual(viewModel.getTitle(),"Title")
+            XCTAssertEqual(viewModel.numberOfRowsInSection(1),0)
+            expectation.fulfill()
         }
+        viewModel.getList()
+        waitForExpectations(timeout: 10)
+        
     }
 
 }

@@ -28,6 +28,8 @@ class HomeView: View {
     
     
     override func viewDidLoad() {
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = UITableView.automaticDimension
         self.addSubview(tableView)
         viewModel = ViewModel()
         viewModel?.delegate = self

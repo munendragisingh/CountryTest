@@ -10,10 +10,8 @@ import UIKit
 class CountryCell: UITableViewCell {
     // contentHolderView holds all the elements in cell
     private let cardView: UIView = UIView()
-    private let verticalStack: UIStackView = UIStackView()
     private let title: UILabel = UILabel()
     private let countryDescription: UILabel = UILabel()
-    private let horizontalStack: UIStackView = UIStackView()
     
     private let countryImage: ImageLoader = {
         let imgView = ImageLoader(image: UIImage(named: "placeHolder"))
@@ -32,11 +30,13 @@ class CountryCell: UITableViewCell {
         self.clipsToBounds = true
         self.selectionStyle = .none
         
-        addSubview(cardView)
+        self.contentView.addSubview(cardView)
         cardView.addSubview(countryImage)
+        cardView.addSubview(title)
+        cardView.addSubview(countryDescription)
         setupCardView()
         setupcountryImage()
-        setupStack()
+        addLabelConstraints()
         self.setTheme()
     }
     
@@ -81,49 +81,40 @@ extension CountryCell {
         cardView.clipsToBounds = true
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
-        cardView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
-        cardView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        cardView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        
+        NSLayoutConstraint(item: cardView, attribute: .leading, relatedBy: .equal, toItem: self.contentView, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: cardView, attribute: .trailing, relatedBy: .equal, toItem: self.contentView, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
+        
+        NSLayoutConstraint(item: cardView, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.contentView, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: cardView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.contentView, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0).isActive = true
     }
     
     /// set verticalStack and  and add constraints
     fileprivate func setupcountryImage() {
         countryImage.translatesAutoresizingMaskIntoConstraints = false
-        countryImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
-        countryImage.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
-        countryImage.widthAnchor.constraint(equalToConstant: 90).isActive = true
-        countryImage.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        
+        NSLayoutConstraint(item: countryImage, attribute: .leading, relatedBy: .equal, toItem: self.cardView, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: countryImage, attribute: .top, relatedBy: .equal, toItem: self.cardView, attribute: .top, multiplier: 1, constant: 10).isActive = true
+        
+        NSLayoutConstraint(item: countryImage, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 90).isActive = true
+        NSLayoutConstraint(item: countryImage, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 90).isActive = true
         countryImage.clipsToBounds = true
     }
     
     /// set horizontal, vertical Stack and add constraints
-    fileprivate func setupStack() {
-        verticalStack.addArrangedSubview(title)
-        verticalStack.addArrangedSubview(countryDescription)
-        verticalStack.translatesAutoresizingMaskIntoConstraints = false
-        verticalStack.axis = .vertical
-        verticalStack.distribution = .fill
-        verticalStack.spacing = 10
-        verticalStack.alignment = .top
-        verticalStack.isLayoutMarginsRelativeArrangement = true
-        verticalStack.layoutMargins = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 5)
-
-        horizontalStack.addArrangedSubview(countryImage)
-        horizontalStack.addArrangedSubview(verticalStack)
-        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
-        horizontalStack.axis = .horizontal
-        horizontalStack.distribution = .fill
-        horizontalStack.alignment = .top
-        horizontalStack.spacing = 10
-        cardView.addSubview(horizontalStack)
+    fileprivate func addLabelConstraints() {
         
-        horizontalStack.isLayoutMarginsRelativeArrangement = true
-        horizontalStack.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
-        horizontalStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
-        horizontalStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
-        horizontalStack.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        horizontalStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        title.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: title, attribute: .leading, relatedBy: .equal, toItem: self.countryImage, attribute: .trailing, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: title, attribute: .trailing, relatedBy: .equal, toItem: self.cardView, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: title, attribute: .top, relatedBy: .equal, toItem: self.cardView, attribute: .topMargin, multiplier: 1, constant: 10).isActive = true
+        
+        countryDescription.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint(item: countryDescription, attribute: .leading, relatedBy: .equal, toItem: self.countryImage, attribute: .trailing, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: countryDescription, attribute: .trailing, relatedBy: .equal, toItem: self.cardView, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: countryDescription, attribute: .top, relatedBy: .equal, toItem: self.title, attribute: .topMargin, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: countryDescription, attribute: .bottom, relatedBy: .equal, toItem: self.cardView, attribute: .bottomMargin, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: countryDescription, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60).isActive = true
     }
 }
