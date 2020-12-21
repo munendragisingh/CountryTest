@@ -15,11 +15,17 @@ class Utility {
     
     /// return window class
     var window: UIWindow? {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let sceneDelegate = windowScene.delegate as? SceneDelegate else {
-            return nil 
-    }
-        return sceneDelegate.window
+        if #available(iOS 13.0, *) {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else {
+                return nil
+            }
+            return sceneDelegate.window
+        }else{
+            guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return nil
+            }
+            return appdelegate.window
+        }
     }
     
     /// check for nerwork connection

@@ -11,6 +11,7 @@ import UIKit
 class HomeViewController: ViewController {
     
     override func viewDidLoad() {
+        self.view = HomeView()
         super.viewDidLoad()
     }
     

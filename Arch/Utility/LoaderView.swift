@@ -11,7 +11,7 @@ import UIKit
 /// LoaderView will used to display full screen loader
 class LoaderView: UIView {
 
-    let activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+    var activityIndicatorView: UIActivityIndicatorView?
     
     /// initializer
     /// - Parameter frame: frame of loader
@@ -27,13 +27,18 @@ class LoaderView: UIView {
     
     /// layoutSubviews
     override func layoutSubviews() {
-        activityIndicatorView.center = self.center
+        activityIndicatorView?.center = self.center
     }
     
     /// set activity Indicator View
     func setup() {
-        activityIndicatorView.color = .white
-        activityIndicatorView.startAnimating()
-        self.addSubview(activityIndicatorView)
+        if #available(iOS 14.0, *) {
+            activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+        } else {
+            activityIndicatorView = UIActivityIndicatorView(style: .white)
+        }
+        activityIndicatorView?.color = .white
+        activityIndicatorView?.startAnimating()
+        self.addSubview(activityIndicatorView!)
     }
 }
